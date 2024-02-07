@@ -1,125 +1,112 @@
 import 'package:flutter/material.dart';
+import 'domain/workout.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(GymApp());
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
+class GymApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Gym App',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+          primaryColor: Color.fromRGBO(50, 65, 85, 1),
+          textTheme: TextTheme(subtitle1: TextStyle(color: Colors.white))),
+      home: HomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+    return Container(
+      child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColor,
+        appBar: AppBar(
+          title: Text('Gym App'),
+          leading: Icon(
+            Icons.fitness_center,
+          ),
+        ),
+        body: WorkoutsList(),
+        bottomNavigationBar: BottomAppBar(
+          child: Container(
+            height: 30,
+            color: Color.fromRGBO(255, 222, 225, 228),
+            child: Center(
+              child: Text(
+                'Выработайте привычку заниматься спортом',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class WorkoutsList extends StatelessWidget {
+  WorkoutsList({super.key});
+
+  final workouts = <Workout>[
+    Workout(
+        title: 'title_0',
+        author: 'author_0',
+        description: 'description_0',
+        level: 'level_0'),
+    Workout(
+        title: 'title_1',
+        author: 'author_1',
+        description: 'description1',
+        level: 'level_1'),
+    Workout(
+        title: 'title_2',
+        author: 'author_2',
+        description: 'description_2',
+        level: 'level_2'),
+    Workout(
+        title: 'title_3',
+        author: 'author_3',
+        description: 'description_3',
+        level: 'level_3'),
+    Workout(
+        title: 'title_4',
+        author: 'author_4',
+        description: 'description_4',
+        level: 'level_4')
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Container(
+        child: ListView.builder(
+          itemCount: workouts.length,
+          itemBuilder: (context, index) {
+            return Card(
+              elevation: 2.0,
+              margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: Container(
+                decoration: BoxDecoration(color: Color.fromARGB(140, 118, 114, 114)),
+                child: ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  leading: Container(
+                    padding: EdgeInsets.only(right: 12.0),
+                    child: Icon(Icons.fitness_center, color: Colors.white),
+                    decoration: BoxDecoration(
+                      border: Border(right: BorderSide(width: 1.0, color: Colors.white24) )
+                    ),
+                  ),
+                  title: Text(workouts[index].title, style: TextStyle(color: Theme.of(context).textTheme.subtitle1?.color ?? Colors.black, fontWeight: FontWeight.bold),),
+                  trailing: Icon(Icons.keyboard_arrow_right, color: Colors.white),
+                  ),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
